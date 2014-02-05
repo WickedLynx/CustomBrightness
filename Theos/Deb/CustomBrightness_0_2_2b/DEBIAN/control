@@ -1,0 +1,9 @@
+Package: com.laughing-buddha-software.custombrightness
+Name: CustomBrightness
+Version: 0.2.2b
+Architecture: iphoneos-arm
+Description: CustomBrightness allows you to specify the backlight level for given ambient light intensity.
+ The app works in background and is intended to be a replacement for the automatic brightness adjustment feature of iOS.
+Maintainer: Harshad
+Author: Harshad
+Section: Utilities
