@@ -7,8 +7,7 @@ SHARED_CFLAGS = -fobjc-arc
 TOOL_NAME = customBrightnessd
 customBrightnessd_FILES = main.m
 customBrightnessd_FRAMEWORKS = IOKit UIKit
-customBrightnessd_PRIVATE_FRAMEWORKS = GraphicsServices
-customBrightnessd_CFLAGS = -I/Users/harshad/Documents/Development/CocoaTouch/PrivateHeaders
+customBrightnessd_CFLAGS = -I/opt/PrivateHeaders
 LOCAL_INSTALL_PATH = "/usr/bin"
 
 include $(THEOS_MAKE_PATH)/tool.mk

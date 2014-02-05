@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		594B60C51893F11500616350 /* CUBBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 594B60C41893F11500616350 /* CUBBorderedButton.m */; };
-		596273AD187EE5B8009B6EC8 /* CUBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 596273A3187EE5B8009B6EC8 /* CUBAppDelegate.m */; };
-		596273AE187EE5B8009B6EC8 /* CUBBrightnessSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 596273A5187EE5B8009B6EC8 /* CUBBrightnessSetting.m */; };
-		596273AF187EE5B8009B6EC8 /* CUBHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 596273A7187EE5B8009B6EC8 /* CUBHomeViewController.m */; };
-		596273B0187EE5B8009B6EC8 /* CUBSavedSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 596273A9187EE5B8009B6EC8 /* CUBSavedSettingsViewController.m */; };
-		596273B1187EE5B8009B6EC8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 596273AB187EE5B8009B6EC8 /* main.m */; };
-		596273B4187EE90F009B6EC8 /* CUBSavedSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 596273B3187EE90F009B6EC8 /* CUBSavedSettingsTableViewCell.m */; };
-		596273B7187EF659009B6EC8 /* CUBHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 596273B6187EF659009B6EC8 /* CUBHelpViewController.m */; };
-		596273BB187EF961009B6EC8 /* Readme.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 596273BA187EF961009B6EC8 /* Readme.pdf */; };
+		590CDB0C18A2A12300BBA2BE /* CUBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDAFB18A2A12200BBA2BE /* CUBAppDelegate.m */; };
+		590CDB0D18A2A12300BBA2BE /* CUBBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDAFD18A2A12200BBA2BE /* CUBBorderedButton.m */; };
+		590CDB0E18A2A12300BBA2BE /* CUBBrightnessSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDAFF18A2A12200BBA2BE /* CUBBrightnessSetting.m */; };
+		590CDB0F18A2A12300BBA2BE /* CUBHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDB0118A2A12200BBA2BE /* CUBHelpViewController.m */; };
+		590CDB1018A2A12300BBA2BE /* CUBHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDB0318A2A12200BBA2BE /* CUBHomeViewController.m */; };
+		590CDB1118A2A12300BBA2BE /* CUBNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDB0518A2A12200BBA2BE /* CUBNavigationController.m */; };
+		590CDB1218A2A12300BBA2BE /* CUBSavedSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDB0718A2A12200BBA2BE /* CUBSavedSettingsTableViewCell.m */; };
+		590CDB1318A2A12300BBA2BE /* CUBSavedSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDB0918A2A12200BBA2BE /* CUBSavedSettingsViewController.m */; };
+		590CDB1418A2A12300BBA2BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 590CDB0B18A2A12300BBA2BE /* main.m */; };
+		590CDB1618A2A14800BBA2BE /* Readme.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 590CDB1518A2A14800BBA2BE /* Readme.pdf */; };
 		599B7EE5187AFEB400BD10AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 599B7EE4187AFEB400BD10AE /* Foundation.framework */; };
 		599B7EE7187AFEB400BD10AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 599B7EE6187AFEB400BD10AE /* CoreGraphics.framework */; };
 		599B7EE9187AFEB400BD10AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 599B7EE8187AFEB400BD10AE /* UIKit.framework */; };
@@ -27,7 +28,6 @@
 		599B7F08187AFEB400BD10AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 599B7F06187AFEB400BD10AE /* InfoPlist.strings */; };
 		599B7F0A187AFEB400BD10AE /* CustomBrightnessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 599B7F09187AFEB400BD10AE /* CustomBrightnessTests.m */; };
 		599B7F14187AFF3900BD10AE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 599B7F13187AFF3900BD10AE /* IOKit.framework */; };
-		599B7F16187AFF4A00BD10AE /* GraphicsServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 599B7F15187AFF4A00BD10AE /* GraphicsServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,24 +41,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		594B60C31893F11500616350 /* CUBBorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBBorderedButton.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBBorderedButton.h; sourceTree = "<group>"; };
-		594B60C41893F11500616350 /* CUBBorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBBorderedButton.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBBorderedButton.m; sourceTree = "<group>"; };
-		596273A2187EE5B8009B6EC8 /* CUBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBAppDelegate.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBAppDelegate.h; sourceTree = "<group>"; };
-		596273A3187EE5B8009B6EC8 /* CUBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBAppDelegate.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBAppDelegate.m; sourceTree = "<group>"; };
-		596273A4187EE5B8009B6EC8 /* CUBBrightnessSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBBrightnessSetting.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBBrightnessSetting.h; sourceTree = "<group>"; };
-		596273A5187EE5B8009B6EC8 /* CUBBrightnessSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBBrightnessSetting.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBBrightnessSetting.m; sourceTree = "<group>"; };
-		596273A6187EE5B8009B6EC8 /* CUBHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBHomeViewController.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBHomeViewController.h; sourceTree = "<group>"; };
-		596273A7187EE5B8009B6EC8 /* CUBHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBHomeViewController.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBHomeViewController.m; sourceTree = "<group>"; };
-		596273A8187EE5B8009B6EC8 /* CUBSavedSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBSavedSettingsViewController.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBSavedSettingsViewController.h; sourceTree = "<group>"; };
-		596273A9187EE5B8009B6EC8 /* CUBSavedSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBSavedSettingsViewController.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBSavedSettingsViewController.m; sourceTree = "<group>"; };
-		596273AA187EE5B8009B6EC8 /* CustomBrightness-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CustomBrightness-Prefix.pch"; path = "../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CustomBrightness-Prefix.pch"; sourceTree = "<group>"; };
-		596273AB187EE5B8009B6EC8 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/main.m; sourceTree = "<group>"; };
-		596273AC187EE5B8009B6EC8 /* NSTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSTask.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/NSTask.h; sourceTree = "<group>"; };
-		596273B2187EE90F009B6EC8 /* CUBSavedSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBSavedSettingsTableViewCell.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBSavedSettingsTableViewCell.h; sourceTree = "<group>"; };
-		596273B3187EE90F009B6EC8 /* CUBSavedSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBSavedSettingsTableViewCell.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBSavedSettingsTableViewCell.m; sourceTree = "<group>"; };
-		596273B5187EF659009B6EC8 /* CUBHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBHelpViewController.h; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBHelpViewController.h; sourceTree = "<group>"; };
-		596273B6187EF659009B6EC8 /* CUBHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBHelpViewController.m; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/CUBHelpViewController.m; sourceTree = "<group>"; };
-		596273BA187EF961009B6EC8 /* Readme.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Readme.pdf; path = ../../../../../Desktop/Archive/CustomBrightnessApp/custombrightness/Resources/Readme.pdf; sourceTree = "<group>"; };
+		590CDAFA18A2A12200BBA2BE /* CUBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBAppDelegate.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBAppDelegate.h; sourceTree = "<group>"; };
+		590CDAFB18A2A12200BBA2BE /* CUBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBAppDelegate.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBAppDelegate.m; sourceTree = "<group>"; };
+		590CDAFC18A2A12200BBA2BE /* CUBBorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBBorderedButton.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBBorderedButton.h; sourceTree = "<group>"; };
+		590CDAFD18A2A12200BBA2BE /* CUBBorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBBorderedButton.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBBorderedButton.m; sourceTree = "<group>"; };
+		590CDAFE18A2A12200BBA2BE /* CUBBrightnessSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBBrightnessSetting.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBBrightnessSetting.h; sourceTree = "<group>"; };
+		590CDAFF18A2A12200BBA2BE /* CUBBrightnessSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBBrightnessSetting.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBBrightnessSetting.m; sourceTree = "<group>"; };
+		590CDB0018A2A12200BBA2BE /* CUBHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBHelpViewController.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBHelpViewController.h; sourceTree = "<group>"; };
+		590CDB0118A2A12200BBA2BE /* CUBHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBHelpViewController.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBHelpViewController.m; sourceTree = "<group>"; };
+		590CDB0218A2A12200BBA2BE /* CUBHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBHomeViewController.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBHomeViewController.h; sourceTree = "<group>"; };
+		590CDB0318A2A12200BBA2BE /* CUBHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBHomeViewController.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBHomeViewController.m; sourceTree = "<group>"; };
+		590CDB0418A2A12200BBA2BE /* CUBNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBNavigationController.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBNavigationController.h; sourceTree = "<group>"; };
+		590CDB0518A2A12200BBA2BE /* CUBNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBNavigationController.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBNavigationController.m; sourceTree = "<group>"; };
+		590CDB0618A2A12200BBA2BE /* CUBSavedSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBSavedSettingsTableViewCell.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBSavedSettingsTableViewCell.h; sourceTree = "<group>"; };
+		590CDB0718A2A12200BBA2BE /* CUBSavedSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBSavedSettingsTableViewCell.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBSavedSettingsTableViewCell.m; sourceTree = "<group>"; };
+		590CDB0818A2A12200BBA2BE /* CUBSavedSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBSavedSettingsViewController.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBSavedSettingsViewController.h; sourceTree = "<group>"; };
+		590CDB0918A2A12200BBA2BE /* CUBSavedSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBSavedSettingsViewController.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBSavedSettingsViewController.m; sourceTree = "<group>"; };
+		590CDB0A18A2A12300BBA2BE /* CustomBrightness-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CustomBrightness-Prefix.pch"; path = "../../Theos/CustomBrightnessApp/custombrightness/CustomBrightness-Prefix.pch"; sourceTree = "<group>"; };
+		590CDB0B18A2A12300BBA2BE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../../Theos/CustomBrightnessApp/custombrightness/main.m; sourceTree = "<group>"; };
+		590CDB1518A2A14800BBA2BE /* Readme.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Readme.pdf; path = ../../Theos/CustomBrightnessApp/custombrightness/Resources/Readme.pdf; sourceTree = "<group>"; };
 		599B7EE1187AFEB400BD10AE /* CustomBrightness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomBrightness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		599B7EE4187AFEB400BD10AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		599B7EE6187AFEB400BD10AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,7 +73,6 @@
 		599B7F07187AFEB400BD10AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		599B7F09187AFEB400BD10AE /* CustomBrightnessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomBrightnessTests.m; sourceTree = "<group>"; };
 		599B7F13187AFF3900BD10AE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		599B7F15187AFF4A00BD10AE /* GraphicsServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GraphicsServices.framework; path = System/Library/PrivateFrameworks/GraphicsServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,6 @@
 				599B7EE7187AFEB400BD10AE /* CoreGraphics.framework in Frameworks */,
 				599B7EE9187AFEB400BD10AE /* UIKit.framework in Frameworks */,
 				599B7F14187AFF3900BD10AE /* IOKit.framework in Frameworks */,
-				599B7F16187AFF4A00BD10AE /* GraphicsServices.framework in Frameworks */,
 				599B7EE5187AFEB400BD10AE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,7 +122,6 @@
 		599B7EE3187AFEB400BD10AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				599B7F15187AFF4A00BD10AE /* GraphicsServices.framework */,
 				599B7F13187AFF3900BD10AE /* IOKit.framework */,
 				599B7EE4187AFEB400BD10AE /* Foundation.framework */,
 				599B7EE6187AFEB400BD10AE /* CoreGraphics.framework */,
@@ -136,22 +134,24 @@
 		599B7EEA187AFEB400BD10AE /* CustomBrightness */ = {
 			isa = PBXGroup;
 			children = (
-				596273A2187EE5B8009B6EC8 /* CUBAppDelegate.h */,
-				596273A3187EE5B8009B6EC8 /* CUBAppDelegate.m */,
-				596273A4187EE5B8009B6EC8 /* CUBBrightnessSetting.h */,
-				596273A5187EE5B8009B6EC8 /* CUBBrightnessSetting.m */,
-				596273A6187EE5B8009B6EC8 /* CUBHomeViewController.h */,
-				596273A7187EE5B8009B6EC8 /* CUBHomeViewController.m */,
-				596273A8187EE5B8009B6EC8 /* CUBSavedSettingsViewController.h */,
-				596273A9187EE5B8009B6EC8 /* CUBSavedSettingsViewController.m */,
-				596273AB187EE5B8009B6EC8 /* main.m */,
-				596273AC187EE5B8009B6EC8 /* NSTask.h */,
-				596273B2187EE90F009B6EC8 /* CUBSavedSettingsTableViewCell.h */,
-				596273B3187EE90F009B6EC8 /* CUBSavedSettingsTableViewCell.m */,
-				596273B5187EF659009B6EC8 /* CUBHelpViewController.h */,
-				596273B6187EF659009B6EC8 /* CUBHelpViewController.m */,
-				594B60C31893F11500616350 /* CUBBorderedButton.h */,
-				594B60C41893F11500616350 /* CUBBorderedButton.m */,
+				590CDAFA18A2A12200BBA2BE /* CUBAppDelegate.h */,
+				590CDAFB18A2A12200BBA2BE /* CUBAppDelegate.m */,
+				590CDAFC18A2A12200BBA2BE /* CUBBorderedButton.h */,
+				590CDAFD18A2A12200BBA2BE /* CUBBorderedButton.m */,
+				590CDAFE18A2A12200BBA2BE /* CUBBrightnessSetting.h */,
+				590CDAFF18A2A12200BBA2BE /* CUBBrightnessSetting.m */,
+				590CDB0018A2A12200BBA2BE /* CUBHelpViewController.h */,
+				590CDB0118A2A12200BBA2BE /* CUBHelpViewController.m */,
+				590CDB0218A2A12200BBA2BE /* CUBHomeViewController.h */,
+				590CDB0318A2A12200BBA2BE /* CUBHomeViewController.m */,
+				590CDB0418A2A12200BBA2BE /* CUBNavigationController.h */,
+				590CDB0518A2A12200BBA2BE /* CUBNavigationController.m */,
+				590CDB0618A2A12200BBA2BE /* CUBSavedSettingsTableViewCell.h */,
+				590CDB0718A2A12200BBA2BE /* CUBSavedSettingsTableViewCell.m */,
+				590CDB0818A2A12200BBA2BE /* CUBSavedSettingsViewController.h */,
+				590CDB0918A2A12200BBA2BE /* CUBSavedSettingsViewController.m */,
+				590CDB0A18A2A12300BBA2BE /* CustomBrightness-Prefix.pch */,
+				590CDB0B18A2A12300BBA2BE /* main.m */,
 				599B7EF6187AFEB400BD10AE /* Images.xcassets */,
 				599B7EEB187AFEB400BD10AE /* Supporting Files */,
 			);
@@ -161,8 +161,7 @@
 		599B7EEB187AFEB400BD10AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				596273BA187EF961009B6EC8 /* Readme.pdf */,
-				596273AA187EE5B8009B6EC8 /* CustomBrightness-Prefix.pch */,
+				590CDB1518A2A14800BBA2BE /* Readme.pdf */,
 				599B7EEC187AFEB400BD10AE /* CustomBrightness-Info.plist */,
 				599B7EED187AFEB400BD10AE /* InfoPlist.strings */,
 			);
@@ -264,7 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				599B7EEF187AFEB400BD10AE /* InfoPlist.strings in Resources */,
-				596273BB187EF961009B6EC8 /* Readme.pdf in Resources */,
+				590CDB1618A2A14800BBA2BE /* Readme.pdf in Resources */,
 				599B7EF7187AFEB400BD10AE /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,14 +283,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				596273B1187EE5B8009B6EC8 /* main.m in Sources */,
-				596273B4187EE90F009B6EC8 /* CUBSavedSettingsTableViewCell.m in Sources */,
-				596273B0187EE5B8009B6EC8 /* CUBSavedSettingsViewController.m in Sources */,
-				594B60C51893F11500616350 /* CUBBorderedButton.m in Sources */,
-				596273B7187EF659009B6EC8 /* CUBHelpViewController.m in Sources */,
-				596273AE187EE5B8009B6EC8 /* CUBBrightnessSetting.m in Sources */,
-				596273AD187EE5B8009B6EC8 /* CUBAppDelegate.m in Sources */,
-				596273AF187EE5B8009B6EC8 /* CUBHomeViewController.m in Sources */,
+				590CDB1318A2A12300BBA2BE /* CUBSavedSettingsViewController.m in Sources */,
+				590CDB1118A2A12300BBA2BE /* CUBNavigationController.m in Sources */,
+				590CDB0F18A2A12300BBA2BE /* CUBHelpViewController.m in Sources */,
+				590CDB0C18A2A12300BBA2BE /* CUBAppDelegate.m in Sources */,
+				590CDB0E18A2A12300BBA2BE /* CUBBrightnessSetting.m in Sources */,
+				590CDB0D18A2A12300BBA2BE /* CUBBorderedButton.m in Sources */,
+				590CDB1018A2A12300BBA2BE /* CUBHomeViewController.m in Sources */,
+				590CDB1418A2A12300BBA2BE /* main.m in Sources */,
+				590CDB1218A2A12300BBA2BE /* CUBSavedSettingsTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +421,7 @@
 				INFOPLIST_FILE = "CustomBrightness/CustomBrightness-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "726AA5C5-3066-44D7-B5E1-49D6DB29B15F";
-				USER_HEADER_SEARCH_PATHS = /Users/harshaddange/Documents/Development/CocoaTouch/PrivateHeaders;
+				USER_HEADER_SEARCH_PATHS = /opt/PrivateHeaders;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -442,7 +442,7 @@
 				INFOPLIST_FILE = "CustomBrightness/CustomBrightness-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "726AA5C5-3066-44D7-B5E1-49D6DB29B15F";
-				USER_HEADER_SEARCH_PATHS = /Users/harshaddange/Documents/Development/CocoaTouch/PrivateHeaders;
+				USER_HEADER_SEARCH_PATHS = /opt/PrivateHeaders;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

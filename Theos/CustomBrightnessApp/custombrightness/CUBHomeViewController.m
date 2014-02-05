@@ -10,7 +10,6 @@
 #import "CUBBrightnessSetting.h"
 #import <IOKit/hid/IOHIDEventSystemClient.h>
 #import <IOKit/hid/IOHIDEventSystem.h>
-#import <GraphicsServices/GraphicsServices.h>
 
 #import "NSTask.h"
 #import <notify.h>

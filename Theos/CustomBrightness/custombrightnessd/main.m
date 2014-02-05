@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <IOKit/hid/IOHIDEventSystemClient.h>
 #import <IOKit/hid/IOHIDEventSystem.h>
-#import <GraphicsServices/GraphicsServices.h>
 #import <notify.h>
 #import <syslog.h>
 #import <dlfcn.h>
@@ -173,7 +172,7 @@ int main (int argc, const char * argv[]) {
                                                   int result = notify_get_state(t, &state);
                                                   SafeToRun = (state == 0);
 
-                                                  if (SafeToRun) {
+                                                  if (SafeToRun && Enabled) {
                                                       int port = SBSSpringBoardServerPort();
                                                       SBSetCurrentBacklightLevel(port, CurrentBrightness);
                                                   }
