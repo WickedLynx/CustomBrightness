@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CUBHomeViewController : UIViewController
+#import "CUBAdvancedSettingsViewController.h"
+
+@interface CUBHomeViewController : UIViewController <CUBAdvancedSettingsViewControllerDelegate>
 
 @end

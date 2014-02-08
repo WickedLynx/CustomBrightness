@@ -6,13 +6,21 @@
 #import <dlfcn.h>
 #import <UIKit/UIKit.h>
 
+NSString *const CUBAdvancedSettingThresholdKey = @"luxThreshold";
+NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverriden";
+
 static NSMutableArray *BrightnessSettings = nil;
 static float CurrentBrightness = -1.0f;
+
 BOOL Enabled = NO;
 BOOL SafeToRun = YES;
+BOOL DisableOnManualOverride = NO;
+
 float const CUBAnimationSteps = 30;
 float const AnimationSleepDuration = 0.025f;
 
+int Threshold = 0;
+int PreviousLuxLevel = -1;
 int displayStatusToken;
 
 void GSEventSetBacklightLevel(float);
@@ -34,11 +42,28 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
     if (IOHIDEventGetType(event)==kIOHIDEventTypeAmbientLightSensor){ // Ambient Light Sensor Event
         
         int luxValue=IOHIDEventGetIntegerValue(event, (IOHIDEventField)kIOHIDEventFieldAmbientLightSensorLevel); // lux Event Field
+        int luxDelta = (luxValue - PreviousLuxLevel);
+        if (Threshold > 0) {
+            if ((luxDelta * luxDelta) < (Threshold * Threshold)) {
+                return;
+            }
+        }
+        
+        PreviousLuxLevel = luxValue;
         
         NSNumber *previousBacklightLevel = [[NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.apple.springboard.plist"] objectForKey:@"SBBacklightLevel2"];
         float previousLevel = CurrentBrightness;
         if (![previousBacklightLevel isKindOfClass:[NSNull class]]) {
             previousLevel = [previousBacklightLevel floatValue];
+            
+            if (DisableOnManualOverride) {
+                if (CurrentBrightness >= 0.0f) {
+                    if (previousLevel > CurrentBrightness) {
+                        Enabled = NO;
+                        return;
+                    }
+                }
+            }
 
         }
 
@@ -102,6 +127,28 @@ void readSettings() {
     } else {
         Enabled = NO;
     }
+    
+    NSDictionary *advancedSettings = dictionary[@"advanced"];
+    if (![advancedSettings isKindOfClass:[NSNull class]] && advancedSettings != nil) {
+        
+        NSNumber *thresholdNumber = advancedSettings[CUBAdvancedSettingThresholdKey];
+        if (![thresholdNumber isKindOfClass:[NSNull class]] && thresholdNumber != nil) {
+            Threshold = [thresholdNumber intValue];
+        } else {
+            Threshold = 0;
+        }
+        
+        NSNumber *disableWhenOverriddenNumber = advancedSettings[CUBAdvancedSettingDisableWhenOverridenKey];
+        if (![disableWhenOverriddenNumber isKindOfClass:[NSNull class]] && disableWhenOverriddenNumber != nil) {
+            DisableOnManualOverride = [disableWhenOverriddenNumber boolValue];
+        } else {
+            DisableOnManualOverride = NO;
+        }
+    } else {
+        Threshold = 0;
+        DisableOnManualOverride = NO;
+    }
+    
 }
 
 int main (int argc, const char * argv[]) {

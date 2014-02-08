@@ -11,6 +11,8 @@
 #import "CUBSavedSettingsTableViewCell.h"
 #import "CUBBrightnessSetting.h"
 #import "CUBBorderedButton.h"
+#import "CUBHomeViewController.h"
+#import "CUBAdvancedSettingsViewController.h"
 
 @interface CUBSavedSettingsViewController () <UITableViewDataSource, UITableViewDelegate> {
     __weak UITableView *_preferencesTableView;
@@ -18,6 +20,7 @@
 }
 
 - (void)touchDeleteAll;
+- (void)touchMore;
 
 @end
 
@@ -56,6 +59,9 @@
     [footerView addSubview:deleteButton];
     
     [_preferencesTableView setTableFooterView:footerView];
+    
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(touchMore)];
+    [self.navigationItem setRightBarButtonItem:moreButton];
 }
 
 - (void)touchDeleteAll {
@@ -63,6 +69,15 @@
     [_preferencesTableView reloadData];
 }
 
+- (void)touchMore {
+    UIViewController *rootViewController = self.navigationController.viewControllers[0];
+    if ([rootViewController isKindOfClass:[CUBHomeViewController class]]) {
+        CUBHomeViewController *homeViewController = (CUBHomeViewController *)rootViewController;
+        
+        CUBAdvancedSettingsViewController *advancedSettingsViewController = [[CUBAdvancedSettingsViewController alloc] initWithDelegate:homeViewController];
+        [self.navigationController pushViewController:advancedSettingsViewController animated:YES];
+    }
+}
 
 #pragma mark - UITableViewDataSource methods
 
@@ -142,7 +157,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //add code here for when you hit delete
+
         if (indexPath.row < [_savedPreferences count]) {
             [_savedPreferences removeObjectAtIndex:indexPath.row];
         }

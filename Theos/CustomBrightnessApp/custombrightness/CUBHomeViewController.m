@@ -18,6 +18,7 @@
 #import "CUBSavedSettingsViewController.h"
 #import "CUBHelpViewController.h"
 #import "CUBBorderedButton.h"
+#import "CUBAdvancedSettingsViewController.h"
 
 #define THEOS_BUILD     1
 
@@ -40,6 +41,7 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
     UISwitch *_enabledSwitch;
     NSString *_settingsFilePath;
     BOOL _enabled;
+    NSDictionary *_advancedSettings;
 }
 
 - (void)sliderValueChanged:(UISlider *)slider;
@@ -74,7 +76,11 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
         serializedRanges = [NSMutableArray new];
     }
     
-    NSDictionary *settingsDictionary = @{@"enabled" : @(_enabled), @"brightnessPreferences" : serializedRanges};
+    if (_advancedSettings == nil) {
+        _advancedSettings = [NSDictionary new];
+    }
+    
+    NSDictionary *settingsDictionary = @{@"enabled" : @(_enabled), @"brightnessPreferences" : serializedRanges, @"advanced" : _advancedSettings};
     
     [settingsDictionary writeToFile:[self settingsFilePath] atomically:YES];
     
@@ -125,6 +131,13 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
         _enabled = [enabledNumber boolValue];
     } else {
         _enabled = NO;
+    }
+    
+    NSDictionary *advancedSettings = dictionary[@"advanced"];
+    if (![advancedSettings isKindOfClass:[NSNull class]] && advancedSettings != nil) {
+        _advancedSettings = advancedSettings;
+    } else {
+        _advancedSettings = [NSDictionary new];
     }
     
     UIBarButtonItem *viewSettingsButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(touchViewCurrentSettings:)];
@@ -290,6 +303,17 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Advanced settings
+
+- (NSDictionary *)savedSettings {
+    return _advancedSettings;
+}
+
+- (void)advancedSettingsViewController:(CUBAdvancedSettingsViewController *)viewController didUpdateSettings:(NSDictionary *)settings {
+    _advancedSettings = settings;
+    [self saveCurrentSettings];
 }
 
 @end

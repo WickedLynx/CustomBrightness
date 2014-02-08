@@ -28,6 +28,7 @@
 		599B7F08187AFEB400BD10AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 599B7F06187AFEB400BD10AE /* InfoPlist.strings */; };
 		599B7F0A187AFEB400BD10AE /* CustomBrightnessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 599B7F09187AFEB400BD10AE /* CustomBrightnessTests.m */; };
 		599B7F14187AFF3900BD10AE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 599B7F13187AFF3900BD10AE /* IOKit.framework */; };
+		59C889D418A4021E00B2E997 /* CUBAdvancedSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59C889D318A4021E00B2E997 /* CUBAdvancedSettingsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		599B7F07187AFEB400BD10AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		599B7F09187AFEB400BD10AE /* CustomBrightnessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomBrightnessTests.m; sourceTree = "<group>"; };
 		599B7F13187AFF3900BD10AE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		59C889D218A4021E00B2E997 /* CUBAdvancedSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CUBAdvancedSettingsViewController.h; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBAdvancedSettingsViewController.h; sourceTree = "<group>"; };
+		59C889D318A4021E00B2E997 /* CUBAdvancedSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CUBAdvancedSettingsViewController.m; path = ../../Theos/CustomBrightnessApp/custombrightness/CUBAdvancedSettingsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +154,8 @@
 				590CDB0818A2A12200BBA2BE /* CUBSavedSettingsViewController.h */,
 				590CDB0918A2A12200BBA2BE /* CUBSavedSettingsViewController.m */,
 				590CDB0A18A2A12300BBA2BE /* CustomBrightness-Prefix.pch */,
+				59C889D218A4021E00B2E997 /* CUBAdvancedSettingsViewController.h */,
+				59C889D318A4021E00B2E997 /* CUBAdvancedSettingsViewController.m */,
 				590CDB0B18A2A12300BBA2BE /* main.m */,
 				599B7EF6187AFEB400BD10AE /* Images.xcassets */,
 				599B7EEB187AFEB400BD10AE /* Supporting Files */,
@@ -289,6 +294,7 @@
 				590CDB0C18A2A12300BBA2BE /* CUBAppDelegate.m in Sources */,
 				590CDB0E18A2A12300BBA2BE /* CUBBrightnessSetting.m in Sources */,
 				590CDB0D18A2A12300BBA2BE /* CUBBorderedButton.m in Sources */,
+				59C889D418A4021E00B2E997 /* CUBAdvancedSettingsViewController.m in Sources */,
 				590CDB1018A2A12300BBA2BE /* CUBHomeViewController.m in Sources */,
 				590CDB1418A2A12300BBA2BE /* main.m in Sources */,
 				590CDB1218A2A12300BBA2BE /* CUBSavedSettingsTableViewCell.m in Sources */,
