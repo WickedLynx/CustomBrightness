@@ -8,6 +8,7 @@
 
 NSString *const CUBAdvancedSettingThresholdKey = @"luxThreshold";
 NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverriden";
+NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
 
 static NSMutableArray *BrightnessSettings = nil;
 static float CurrentBrightness = -1.0f;
@@ -15,6 +16,7 @@ static float CurrentBrightness = -1.0f;
 BOOL Enabled = NO;
 BOOL SafeToRun = YES;
 BOOL DisableOnManualOverride = NO;
+BOOL ShouldAdjustLinearly = NO;
 
 float const CUBAnimationSteps = 30;
 float const AnimationSleepDuration = 0.025f;
@@ -68,16 +70,49 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
         }
 
         BOOL foundSetting = NO;
+        int previousLuxSetting = 0;
+        float minimumBrightness = 0;
+        
+        for (int count = 0; count != [BrightnessSettings count]; ++count) {
+            
+            NSDictionary *aSetting = BrightnessSettings[count];
+            int currentLuxSetting = [aSetting[@"lux"] intValue];
+            float maximumBrightness = [aSetting[@"screenBrightness"] floatValue];
 
-        for (NSDictionary *aSetting in BrightnessSettings) {
-            if ([aSetting[@"lux"] intValue] >= luxValue) {
-                float brightness = [aSetting[@"screenBrightness"] floatValue];
+            if (currentLuxSetting >= luxValue) {
+                
+                float luxSettingDelta = currentLuxSetting - previousLuxSetting;
+                
+                if (ShouldAdjustLinearly && (luxSettingDelta != 0)) {
+                    
+                    float targetBrightnessDelta = (maximumBrightness - minimumBrightness) / luxSettingDelta;
+
+                    float brightness = minimumBrightness + (targetBrightnessDelta * (luxValue - previousLuxSetting));
+
                     setBacklightLevel(brightness, previousLevel, YES);
+                    
+                } else {
+                    float brightness = maximumBrightness;
+                    setBacklightLevel(brightness, previousLevel, YES);
+                }
 
                 foundSetting = YES;
                 break;
             }
+            
+            previousLuxSetting = currentLuxSetting;
+            minimumBrightness = maximumBrightness;
         }
+        
+//        for (NSDictionary *aSetting in BrightnessSettings) {
+//            if ([aSetting[@"lux"] intValue] >= luxValue) {
+//                float brightness = [aSetting[@"screenBrightness"] floatValue];
+//                    setBacklightLevel(brightness, previousLevel, YES);
+//
+//                foundSetting = YES;
+//                break;
+//            }
+//        }
         
         if (!foundSetting) {
 
@@ -89,6 +124,7 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
 
 void setBacklightLevel(float targetBacklightLevel, float currentBacklightLevel, BOOL animated) {
     if (currentBacklightLevel == targetBacklightLevel) {
+
         return;
     }
     
@@ -145,9 +181,17 @@ void readSettings() {
         } else {
             DisableOnManualOverride = NO;
         }
+        
+        NSNumber *linearAdjustmentNumber = advancedSettings[CUBAdvancedSettingLinearAdjustmentKey];
+        if (![linearAdjustmentNumber isKindOfClass:[NSNull class]] && linearAdjustmentNumber != nil) {
+            ShouldAdjustLinearly = [linearAdjustmentNumber boolValue];
+        } else {
+            ShouldAdjustLinearly = NO;
+        }
     } else {
         Threshold = 0;
         DisableOnManualOverride = NO;
+        ShouldAdjustLinearly = NO;
     }
     
 }

@@ -10,6 +10,7 @@
 
 NSString *const CUBAdvancedSettingThresholdKey = @"luxThreshold";
 NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverriden";
+NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
 
 @interface CUBAdvancedSettingsViewController () {
     NSMutableDictionary *_settings;
@@ -20,6 +21,7 @@ NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverrid
 - (void)toggleDisableWhenOverriden:(UISwitch *)aSwitch;
 - (void)touchDone;
 - (void)updateThresholdLabel:(int)lux;
+- (void)toggleLinearAdjustment:(UISwitch *)aSwitch;
 
 @end
 
@@ -66,9 +68,19 @@ NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverrid
     UISlider *thresholdSlider = [[UISlider alloc] initWithFrame:CGRectMake(20, thresholdLabel.frame.origin.y + thresholdLabel.bounds.size.height + 5, self.view.bounds.size.width - 40, 50)];
     [thresholdSlider setContinuous:YES];
     [thresholdSlider setMinimumValue:0.0f];
-    [thresholdSlider setMaximumValue:10.0f];
+    [thresholdSlider setMaximumValue:20.0f];
     [thresholdSlider addTarget:self action:@selector(thresholdSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:thresholdSlider];
+    
+    UILabel *linearAdjustmentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, thresholdSlider.frame.origin.y + thresholdSlider.bounds.size.height + 30, 200, 30)];
+    [linearAdjustmentLabel setText:@"Linear Adjustment"];
+    [linearAdjustmentLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.view addSubview:linearAdjustmentLabel];
+    
+    UISwitch *linearAdjustmentSwitch = [[UISwitch alloc] initWithFrame:CGRectMake((self.view.bounds.size.width - 70), linearAdjustmentLabel.frame.origin.y, 50, 50)];
+    [linearAdjustmentSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin)];
+    [linearAdjustmentSwitch addTarget:self action:@selector(toggleLinearAdjustment:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:linearAdjustmentSwitch];
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(touchDone)];
     [self.navigationItem setRightBarButtonItem:doneButton];
@@ -94,12 +106,20 @@ NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverrid
             [self updateThresholdLabel:0];
         }
         
+        NSNumber *linearAdjustmentNumber = _settings[CUBAdvancedSettingLinearAdjustmentKey];
+        if (![linearAdjustmentNumber isKindOfClass:[NSNull class]] && linearAdjustmentNumber != nil) {
+            [linearAdjustmentSwitch setOn:[linearAdjustmentNumber boolValue]];
+        } else {
+            [linearAdjustmentSwitch setOn:NO];
+        }
+        
     } else {
         
         _settings = [NSMutableDictionary new];
         [manualOverrideSwitch setOn:NO];
         [thresholdSlider setValue:0.0f];
         [self updateThresholdLabel:0];
+        [linearAdjustmentSwitch setOn:NO];
     }
 }
 
@@ -122,6 +142,10 @@ NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverrid
 
 - (void)updateThresholdLabel:(int)lux {
     [_thresholdLabel setText:[NSString stringWithFormat:@"Minimum change in ambient light after which brightness is adjusted: %d lux", lux]];
+}
+
+- (void)toggleLinearAdjustment:(UISwitch *)aSwitch {
+    _settings[CUBAdvancedSettingLinearAdjustmentKey] = @([aSwitch isOn]);
 }
 
 
