@@ -57,8 +57,8 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
             previousLevel = [previousBacklightLevel floatValue];
             
             if (DisableOnManualOverride) {
-                if (CurrentBrightness >= 0.0f) {
-                    if (previousLevel > CurrentBrightness) {
+                if (CurrentBrightness >= 0.0f && previousLevel != 0) {
+                    if (previousLevel != CurrentBrightness) {
                         Enabled = NO;
                         return;
                     }
@@ -111,6 +111,7 @@ void setBacklightLevel(float targetBacklightLevel, float currentBacklightLevel, 
 }
 
 void readSettings() {
+    PreviousLuxLevel = -100;
     NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.laughing-buddha-software.CustomBrightnessSettings.plist"];
     CurrentBrightness = -1.0f;
     NSArray *array = dictionary[@"brightnessPreferences"];
