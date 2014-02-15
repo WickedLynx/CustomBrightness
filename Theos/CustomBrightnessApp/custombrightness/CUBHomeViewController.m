@@ -11,7 +11,6 @@
 #import <IOKit/hid/IOHIDEventSystemClient.h>
 #import <IOKit/hid/IOHIDEventSystem.h>
 
-#import "NSTask.h"
 #import <notify.h>
 #import <dlfcn.h>
 
@@ -19,10 +18,6 @@
 #import "CUBHelpViewController.h"
 #import "CUBBorderedButton.h"
 #import "CUBAdvancedSettingsViewController.h"
-
-#define THEOS_BUILD     1
-
-void GSEventSetBacklightLevel(float);
 
 IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(CFAllocatorRef allocator);
 int IOHIDEventSystemClientSetMatching(IOHIDEventSystemClientRef client, CFDictionaryRef match);
@@ -36,8 +31,8 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
 
 @interface CUBHomeViewController () {
     NSMutableArray *_brightnessSettings;
-    __weak UILabel *_luxLabel;
-    __weak UISlider *_brightnessSlider;
+    UILabel *_luxLabel;
+    UISlider *_brightnessSlider;
     UISwitch *_enabledSwitch;
     NSString *_settingsFilePath;
     BOOL _enabled;
@@ -84,7 +79,7 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
     
     [settingsDictionary writeToFile:[self settingsFilePath] atomically:YES];
     
-    notify_post("com.laughing-buddha-software.settingsChanged");
+    notify_post("com.laughing-buddha-software.customBrightness.settingsChanged");
 }
 
 
@@ -198,6 +193,22 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
     [_enabledSwitch addTarget:self action:@selector(toggleEnabled:) forControlEvents:UIControlEventValueChanged];
     [_enabledSwitch setOn:_enabled];
     
+    
+    int settingsToken;
+    notify_register_dispatch("com.laughing-buddha-software.customBrightnessd.settingsChanged",
+                             &settingsToken,
+                             dispatch_get_main_queue(), ^(int t) {
+                                 
+                                 NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[self settingsFilePath]];
+                                 NSNumber *enabledNumber = dictionary[@"enabled"];
+                                 if (![enabledNumber isKindOfClass:[NSNull class]] && enabledNumber != nil) {
+                                     _enabled = [enabledNumber boolValue];
+                                 } else {
+                                     _enabled = NO;
+                                 }
+                                 
+                                 [_enabledSwitch setOn:_enabled animated:YES];
+                             });
 }
 
 void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEventRef event) {

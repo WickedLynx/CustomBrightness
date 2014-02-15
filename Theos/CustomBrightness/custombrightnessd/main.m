@@ -13,10 +13,14 @@ NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
 static NSMutableArray *BrightnessSettings = nil;
 static float CurrentBrightness = -1.0f;
 
+IOHIDEventSystemClientRef eventSystemClient;
+
 BOOL Enabled = NO;
 BOOL SafeToRun = YES;
 BOOL DisableOnManualOverride = NO;
 BOOL ShouldAdjustLinearly = NO;
+
+BOOL callBackRegistered = NO;
 
 float const CUBAnimationSteps = 30;
 float const AnimationSleepDuration = 0.025f;
@@ -27,12 +31,15 @@ int displayStatusToken;
 
 void GSEventSetBacklightLevel(float);
 void setBacklightLevel(float targetBacklightLevel, float currentBacklightLevel, BOOL animated);
+void writeSettings();
 
 IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(CFAllocatorRef allocator);
 int IOHIDEventSystemClientSetMatching(IOHIDEventSystemClientRef client, CFDictionaryRef match);
 CFArrayRef IOHIDEventSystemClientCopyServices(IOHIDEventSystemClientRef, int);
 typedef struct __IOHIDServiceClient * IOHIDServiceClientRef;
 int IOHIDServiceClientSetProperty(IOHIDServiceClientRef, CFStringRef, CFNumberRef);
+
+
 
 static int (*SBSSpringBoardServerPort)() = 0;
 static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
@@ -44,6 +51,7 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
     if (IOHIDEventGetType(event)==kIOHIDEventTypeAmbientLightSensor){ // Ambient Light Sensor Event
         
         int luxValue=IOHIDEventGetIntegerValue(event, (IOHIDEventField)kIOHIDEventFieldAmbientLightSensorLevel); // lux Event Field
+        
         int luxDelta = (luxValue - PreviousLuxLevel);
         if (Threshold > 0) {
             if ((luxDelta * luxDelta) < (Threshold * Threshold)) {
@@ -62,11 +70,12 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
                 if (CurrentBrightness >= 0.0f && previousLevel != 0) {
                     if (previousLevel != CurrentBrightness) {
                         Enabled = NO;
+                        writeSettings();
                         return;
                     }
                 }
             }
-
+            
         }
 
         BOOL foundSetting = NO;
@@ -104,21 +113,29 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
             minimumBrightness = maximumBrightness;
         }
         
-//        for (NSDictionary *aSetting in BrightnessSettings) {
-//            if ([aSetting[@"lux"] intValue] >= luxValue) {
-//                float brightness = [aSetting[@"screenBrightness"] floatValue];
-//                    setBacklightLevel(brightness, previousLevel, YES);
-//
-//                foundSetting = YES;
-//                break;
-//            }
-//        }
-        
         if (!foundSetting) {
 
             setBacklightLevel(0.99f, previousLevel, YES);
         }
 
+    }
+}
+
+void registerALSCallback() {
+    if (!callBackRegistered) {
+        IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+        IOHIDEventSystemClientRegisterEventCallback(eventSystemClient, handle_event, NULL, NULL);
+        
+        callBackRegistered = YES;
+    }
+}
+
+void unregisterALSCallback() {
+    if (callBackRegistered) {
+        IOHIDEventSystemClientUnscheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+        IOHIDEventSystemClientUnregisterEventCallback(eventSystemClient);
+        
+        callBackRegistered = NO;
     }
 }
 
@@ -129,8 +146,12 @@ void setBacklightLevel(float targetBacklightLevel, float currentBacklightLevel, 
     }
     
     int port = SBSSpringBoardServerPort();
+    float brightnessDelta = targetBacklightLevel - currentBacklightLevel;
+    if (brightnessDelta < 0) {
+        brightnessDelta = brightnessDelta * -1;
+    }
 
-    if (animated) {
+    if (animated && brightnessDelta > 0.01) {
 
         float brightnessDelta = (targetBacklightLevel - currentBacklightLevel) / CUBAnimationSteps;
         float brightness = currentBacklightLevel;
@@ -165,6 +186,12 @@ void readSettings() {
         Enabled = NO;
     }
     
+    if (!Enabled) {
+        unregisterALSCallback();
+    } else {
+        registerALSCallback();
+    }
+    
     NSDictionary *advancedSettings = dictionary[@"advanced"];
     if (![advancedSettings isKindOfClass:[NSNull class]] && advancedSettings != nil) {
         
@@ -196,6 +223,14 @@ void readSettings() {
     
 }
 
+void writeSettings() {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.laughing-buddha-software.CustomBrightnessSettings.plist"];
+    dictionary[@"enabled"] = @(Enabled);
+    [dictionary writeToFile:@"/var/mobile/Library/Preferences/com.laughing-buddha-software.CustomBrightnessSettings.plist" atomically:YES];
+    
+    notify_post("com.laughing-buddha-software.customBrightnessd.settingsChanged");
+}
+
 int main (int argc, const char * argv[]) {
 
     @autoreleasepool {
@@ -219,8 +254,6 @@ int main (int argc, const char * argv[]) {
             return 1;
         }
 
-        readSettings();
-
         int pv1 = 0xff00;
         int pv2 = 4;
         CFNumberRef mVals[2];
@@ -233,10 +266,10 @@ int main (int argc, const char * argv[]) {
 
         CFDictionaryRef matchInfo = CFDictionaryCreate(CFAllocatorGetDefault(),(const void**)mKeys,(const void**)mVals, 2, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
         
-        IOHIDEventSystemClientRef s_hidSysC = IOHIDEventSystemClientCreate(kCFAllocatorDefault);
-        IOHIDEventSystemClientSetMatching(s_hidSysC,matchInfo);
+        eventSystemClient = IOHIDEventSystemClientCreate(kCFAllocatorDefault);
+        IOHIDEventSystemClientSetMatching(eventSystemClient,matchInfo);
         
-        CFArrayRef matchingsrvs = IOHIDEventSystemClientCopyServices(s_hidSysC,0);
+        CFArrayRef matchingsrvs = IOHIDEventSystemClientCopyServices(eventSystemClient,0);
         
         if (CFArrayGetCount(matchingsrvs) == 0)
         {
@@ -250,7 +283,7 @@ int main (int argc, const char * argv[]) {
         IOHIDServiceClientSetProperty(alssc,CFSTR("ReportInterval"),interval);
         
         int settingsToken;
-        notify_register_dispatch("com.laughing-buddha-software.settingsChanged",
+        notify_register_dispatch("com.laughing-buddha-software.customBrightness.settingsChanged",
                                               &settingsToken,
                                               dispatch_get_main_queue(), ^(int t) {
                                                   
@@ -268,15 +301,19 @@ int main (int argc, const char * argv[]) {
                                                       int port = SBSSpringBoardServerPort();
                                                       SBSetCurrentBacklightLevel(port, CurrentBrightness);
                                                   }
+                                                  
+                                                  if (!Enabled) {
+                                                      unregisterALSCallback();
+                                                  } else {
+                                                      registerALSCallback();
+                                                  }
 
                                                   if (result != NOTIFY_STATUS_OK) {
                                                       NSLog(@"customBrightnessd: Notify status not OK");
                                                   }
                                               });
 
-        
-        IOHIDEventSystemClientScheduleWithRunLoop(s_hidSysC, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-        IOHIDEventSystemClientRegisterEventCallback(s_hidSysC, handle_event, NULL, NULL);
+        readSettings();
         
         CFRunLoopRun();
 
