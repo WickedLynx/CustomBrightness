@@ -9,6 +9,9 @@
 NSString *const CUBAdvancedSettingThresholdKey = @"luxThreshold";
 NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverriden";
 NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
+NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
+
+int const CUBDefaultPollingInterval = 3000000;
 
 static NSMutableArray *BrightnessSettings = nil;
 static float CurrentBrightness = -1.0f;
@@ -28,6 +31,7 @@ float const AnimationSleepDuration = 0.025f;
 int Threshold = 0;
 int PreviousLuxLevel = -1;
 int displayStatusToken;
+int pollingInterval = CUBDefaultPollingInterval;
 
 void GSEventSetBacklightLevel(float);
 void setBacklightLevel(float targetBacklightLevel, float currentBacklightLevel, BOOL animated);
@@ -39,6 +43,7 @@ CFArrayRef IOHIDEventSystemClientCopyServices(IOHIDEventSystemClientRef, int);
 typedef struct __IOHIDServiceClient * IOHIDServiceClientRef;
 int IOHIDServiceClientSetProperty(IOHIDServiceClientRef, CFStringRef, CFNumberRef);
 
+IOHIDServiceClientRef alsServiceClent;
 
 
 static int (*SBSSpringBoardServerPort)() = 0;
@@ -122,7 +127,13 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
 }
 
 void registerALSCallback() {
+    
     if (!callBackRegistered) {
+        
+        int currentPollingInterval = pollingInterval;
+        CFNumberRef interval = CFNumberCreate(CFAllocatorGetDefault(), kCFNumberIntType, &currentPollingInterval);
+        IOHIDServiceClientSetProperty(alsServiceClent,CFSTR("ReportInterval"),interval);
+        
         IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
         IOHIDEventSystemClientRegisterEventCallback(eventSystemClient, handle_event, NULL, NULL);
         
@@ -186,9 +197,15 @@ void readSettings() {
         Enabled = NO;
     }
     
-    if (!Enabled) {
-        unregisterALSCallback();
+    NSNumber *pollingIntervalNumber = dictionary[CUBAdvancedSettingsPollingIntervalKey];
+    if (![pollingIntervalNumber isKindOfClass:[NSNull class]] && pollingIntervalNumber != nil) {
+        pollingInterval = [pollingIntervalNumber intValue] * 1000000;
     } else {
+        pollingInterval = CUBDefaultPollingInterval;
+    }
+    
+    unregisterALSCallback();
+    if (Enabled) {
         registerALSCallback();
     }
     
@@ -277,8 +294,9 @@ int main (int argc, const char * argv[]) {
         }
         
         IOHIDServiceClientRef alssc = (IOHIDServiceClientRef)CFArrayGetValueAtIndex(matchingsrvs, 0);
+        alsServiceClent = alssc;
         
-        int ri = 3000000;
+        int ri = CUBDefaultPollingInterval;
         CFNumberRef interval = CFNumberCreate(CFAllocatorGetDefault(), kCFNumberIntType, &ri);
         IOHIDServiceClientSetProperty(alssc,CFSTR("ReportInterval"),interval);
         

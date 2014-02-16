@@ -11,10 +11,12 @@
 NSString *const CUBAdvancedSettingThresholdKey = @"luxThreshold";
 NSString *const CUBAdvancedSettingDisableWhenOverridenKey = @"disableWhenOverriden";
 NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
+NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
 
 @interface CUBAdvancedSettingsViewController () {
     NSMutableDictionary *_settings;
     UILabel *_thresholdLabel;
+    UILabel *_pollingIntervalLabel;
 }
 
 - (void)thresholdSliderValueChanged:(UISlider *)slider;
@@ -22,6 +24,7 @@ NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
 - (void)touchDone;
 - (void)updateThresholdLabel:(int)lux;
 - (void)toggleLinearAdjustment:(UISwitch *)aSwitch;
+- (void)pollingIntervalSliderValueChanged:(UISlider *)slider;
 
 @end
 
@@ -82,6 +85,20 @@ NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
     [linearAdjustmentSwitch addTarget:self action:@selector(toggleLinearAdjustment:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:linearAdjustmentSwitch];
     
+    UILabel *pollingIntervalLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, linearAdjustmentSwitch.frame.origin.y + linearAdjustmentSwitch.bounds.size.height + 30, 280, 30)];
+    [pollingIntervalLabel setText:@"Polling interval: 3 seconds"];
+    [pollingIntervalLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.view addSubview:pollingIntervalLabel];
+    _pollingIntervalLabel = pollingIntervalLabel;
+    
+    UISlider *pollingIntervalSlider = [[UISlider alloc] initWithFrame:CGRectMake(20, pollingIntervalLabel.frame.origin.y + pollingIntervalLabel.bounds.size.height + 5, self.view.bounds.size.width - 40, 50)];
+    [pollingIntervalSlider setContinuous:YES];
+    [pollingIntervalSlider setMinimumValue:2.0f];
+    [pollingIntervalSlider setMaximumValue:10.0f];
+    [pollingIntervalSlider addTarget:self action:@selector(pollingIntervalSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:pollingIntervalSlider];
+    [pollingIntervalSlider setValue:3.0f];
+    
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(touchDone)];
     [self.navigationItem setRightBarButtonItem:doneButton];
     
@@ -111,6 +128,12 @@ NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
             [linearAdjustmentSwitch setOn:[linearAdjustmentNumber boolValue]];
         } else {
             [linearAdjustmentSwitch setOn:NO];
+        }
+        
+        NSNumber *pollingIntervalNumber = _settings[CUBAdvancedSettingsPollingIntervalKey];
+        if (![pollingIntervalNumber isKindOfClass:[NSNull class]] && pollingIntervalNumber != nil) {
+            [_pollingIntervalLabel setText:[NSString stringWithFormat:@"Polling interval: %d seconds", [pollingIntervalNumber intValue]]];
+            [pollingIntervalSlider setValue:[pollingIntervalNumber floatValue]];
         }
         
     } else {
@@ -146,6 +169,12 @@ NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
 
 - (void)toggleLinearAdjustment:(UISwitch *)aSwitch {
     _settings[CUBAdvancedSettingLinearAdjustmentKey] = @([aSwitch isOn]);
+}
+
+- (void)pollingIntervalSliderValueChanged:(UISlider *)slider {
+    int pollingInterval = [slider value];
+    _settings[CUBAdvancedSettingsPollingIntervalKey] = @(pollingInterval);
+    [_pollingIntervalLabel setText:[NSString stringWithFormat:@"Polling interval: %d seconds", pollingInterval]];
 }
 
 
