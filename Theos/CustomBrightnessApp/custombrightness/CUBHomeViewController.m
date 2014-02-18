@@ -46,6 +46,7 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
 - (void)touchViewCurrentSettings:(UIButton *)aButton;
 - (void)touchRestart:(UIButton *)aButton;
 - (void)touchHelp:(UIBarButtonItem *)barButton;
+- (void)touchSettings:(UIBarButtonItem *)barButton;
 
 @end
 
@@ -135,13 +136,13 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
         _advancedSettings = [NSDictionary new];
     }
     
-    UIBarButtonItem *viewSettingsButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(touchViewCurrentSettings:)];
+    UIBarButtonItem *viewSettingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(touchSettings:)];
     [self.navigationItem setRightBarButtonItem:viewSettingsButton];
     
     UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?" style:UIBarButtonItemStylePlain target:self action:@selector(touchHelp:)];
     [self.navigationItem setLeftBarButtonItem:helpButton];
     
-    [self setTitle:@"Custom Brightness"];
+    [self setTitle:@"CustomBrightness"];
     
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, 300, 80)];
     [descriptionLabel setNumberOfLines:0];
@@ -150,16 +151,16 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
     [self.view addSubview:descriptionLabel];
     [descriptionLabel setText:@"Use the slider to adjust the brightness for the current ambient light\nPress Save to save the setting\nPress Apply to apply your settings"];
     
-    UILabel *lux = [[UILabel alloc] initWithFrame:CGRectMake(20, 170, 200, 40)];
+    UILabel *lux = [[UILabel alloc] initWithFrame:CGRectMake(20, 160, 200, 40)];
     [lux setText:@"Ambient Light (lux): "];
     [self.view addSubview:lux];
     
-    UILabel *luxLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 170, 200, 40)];
+    UILabel *luxLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 160, 200, 40)];
     [luxLabel setText:@""];
     [self.view addSubview:luxLabel];
     _luxLabel = luxLabel;
     
-    UISlider *brightnessSlider = [[UISlider alloc] initWithFrame:CGRectMake(20, 210, 280, 50)];
+    UISlider *brightnessSlider = [[UISlider alloc] initWithFrame:CGRectMake(20, 200, 280, 50)];
     [brightnessSlider setContinuous:YES];
     [self.view addSubview:brightnessSlider];
     [brightnessSlider setMinimumValue:0.0f];
@@ -174,8 +175,9 @@ static void (*SBSetCurrentBacklightLevel)(int _port, float level) = 0;
         [self.view addSubview:aButton];
     };
     
-    addButton(CGRectMake(100, 280, 120, 40), @"Save", [UIColor colorWithRed:0.14f green:0.65f blue:0.97f alpha:1.00f], @selector(touchSave:));
-    addButton(CGRectMake(100, 350, 120, 40), @"Apply", [UIColor colorWithRed:0.47f green:0.81f blue:0.21f alpha:1.00f], @selector(touchApply:));
+    addButton(CGRectMake(100, 260, 120, 40), @"Save", [UIColor colorWithRed:0.14f green:0.65f blue:0.97f alpha:1.00f], @selector(touchSave:));
+    addButton(CGRectMake(100, 320, 120, 40), @"Edit", [UIColor colorWithRed:0.14f green:0.65f blue:0.97f alpha:1.00f], @selector(touchViewCurrentSettings:));
+    addButton(CGRectMake(100, 380, 120, 40), @"Apply", [UIColor colorWithRed:0.47f green:0.81f blue:0.21f alpha:1.00f], @selector(touchApply:));
 
     
     [self registerForALSEvents];
@@ -302,6 +304,11 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
 - (void)touchHelp:(UIBarButtonItem *)barButton {
     CUBHelpViewController *helpVC = [[CUBHelpViewController alloc] init];
     [self.navigationController pushViewController:helpVC animated:YES];
+}
+
+- (void)touchSettings:(UIBarButtonItem *)barButton {
+    CUBAdvancedSettingsViewController *advancedSettingsViewController = [[CUBAdvancedSettingsViewController alloc] initWithDelegate:self];
+    [self.navigationController pushViewController:advancedSettingsViewController animated:YES];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

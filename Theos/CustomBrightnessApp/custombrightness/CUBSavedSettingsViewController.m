@@ -59,9 +59,6 @@
     [footerView addSubview:deleteButton];
     
     [_preferencesTableView setTableFooterView:footerView];
-    
-    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(touchMore)];
-    [self.navigationItem setRightBarButtonItem:moreButton];
 }
 
 - (void)touchDeleteAll {

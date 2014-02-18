@@ -47,12 +47,12 @@ NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [self setTitle:@"Advanced"];
+    [self setTitle:@"Settings"];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     UILabel *manualOverrideLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80, 200, 30)];
-    [manualOverrideLabel setText:@"Disable if manually changed"];
+    [manualOverrideLabel setText:@"Manual Override"];
     [manualOverrideLabel setAdjustsFontSizeToFitWidth:YES];
     [self.view addSubview:manualOverrideLabel];
     
@@ -159,7 +159,7 @@ NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
 - (void)touchDone {
     
     [self.delegate advancedSettingsViewController:self didUpdateSettings:_settings];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
