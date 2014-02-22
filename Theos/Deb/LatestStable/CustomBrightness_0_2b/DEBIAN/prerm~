@@ -1,0 +1,5 @@
+#!/bin/sh
+
+launchctl unload -w /System/LaunchDaemons/com.laughing-buddha-software.customBrightnessd.plist || true
+
+killall customBrightnessd || true
