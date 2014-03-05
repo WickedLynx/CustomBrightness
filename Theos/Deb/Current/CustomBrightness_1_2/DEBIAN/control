@@ -1,0 +1,10 @@
+Package: com.laughing-buddha-software.custombrightness
+Name: CustomBrightness
+Version: 1.2
+Architecture: iphoneos-arm
+Description: A better auto-brightness
+ CustomBrightness is a replacement for the default auto brightness feature of iOS. It allows you to specify the display backlight level of the iDevice for the current ambient light. The app always runs in the background and adjusts the display brightness as the ambient light changes.
+ Not compatible with iPod Touch 5th generation.
+Maintainer: Harshad <lbs_support@zoho.com>
+Author: Harshad <lbs_support@zoho.com>
+Section: Utilities
