@@ -1,9 +1,0 @@
-#!/bin/sh
-
-killall customBrightnessd || true
-
-chmod +x /usr/bin/customBrightnessd
-
-chown 0:0 /System/Library/LaunchDaemons/com.laughing-buddha-software.customBrightnessd.plist
-
-launchctl load -w /System/Library/LaunchDaemons/com.laughing-buddha-software.customBrightnessd.plist
