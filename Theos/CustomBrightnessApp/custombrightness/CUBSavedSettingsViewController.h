@@ -2,7 +2,7 @@
 //  CUBSavedSettingsViewController.h
 //  
 //
-//  Created by Harshad Dange on 09/01/2014.
+//  Created by Harshad on 09/01/2014.
 //
 //
 

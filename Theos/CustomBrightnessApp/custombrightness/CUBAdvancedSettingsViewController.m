@@ -2,7 +2,7 @@
 //  CUBAdvancedSettingsViewController.m
 //  CustomBrightness
 //
-//  Created by Harshad Dange on 06/02/2014.
+//  Created by Harshad on 06/02/2014.
 //  Copyright (c) 2014 Laughing Buddha Software. All rights reserved.
 //
 
@@ -22,7 +22,7 @@ NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
 - (void)thresholdSliderValueChanged:(UISlider *)slider;
 - (void)toggleDisableWhenOverriden:(UISwitch *)aSwitch;
 - (void)touchDone;
-- (void)updateThresholdLabel:(int)lux;
+- (void)updateThresholdLabel:(int)threshold;
 - (void)toggleLinearAdjustment:(UISwitch *)aSwitch;
 - (void)pollingIntervalSliderValueChanged:(UISlider *)slider;
 
@@ -71,7 +71,7 @@ NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
     UISlider *thresholdSlider = [[UISlider alloc] initWithFrame:CGRectMake(20, thresholdLabel.frame.origin.y + thresholdLabel.bounds.size.height + 5, self.view.bounds.size.width - 40, 50)];
     [thresholdSlider setContinuous:YES];
     [thresholdSlider setMinimumValue:0.0f];
-    [thresholdSlider setMaximumValue:20.0f];
+    [thresholdSlider setMaximumValue:100.0f];
     [thresholdSlider addTarget:self action:@selector(thresholdSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:thresholdSlider];
     
@@ -163,8 +163,8 @@ NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
     
 }
 
-- (void)updateThresholdLabel:(int)lux {
-    [_thresholdLabel setText:[NSString stringWithFormat:@"Minimum change in ambient light after which brightness is adjusted: %d lux", lux]];
+- (void)updateThresholdLabel:(int)threshold {
+    [_thresholdLabel setText:[NSString stringWithFormat:@"Adjust brightness when ambient light changes by at least: %d %%", threshold]];
 }
 
 - (void)toggleLinearAdjustment:(UISwitch *)aSwitch {

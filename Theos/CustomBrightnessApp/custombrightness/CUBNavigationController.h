@@ -2,7 +2,7 @@
 //  CUBNavigationController.h
 //  
 //
-//  Created by Harshad Dange on 02/02/2014.
+//  Created by Harshad on 02/02/2014.
 //
 //
 

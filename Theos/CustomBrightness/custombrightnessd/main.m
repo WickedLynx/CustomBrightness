@@ -12,6 +12,8 @@ NSString *const CUBAdvancedSettingLinearAdjustmentKey = @"linearAdjustment";
 NSString *const CUBAdvancedSettingsPollingIntervalKey = @"pollingInterval";
 
 int const CUBDefaultPollingInterval = 3000000;
+float const CUBAnimationSteps = 30;
+float const CUBAnimationSleepDuration = 0.025f;
 
 static NSMutableArray *BrightnessSettings = nil;
 static float CurrentBrightness = -1.0f;
@@ -24,9 +26,6 @@ BOOL DisableOnManualOverride = NO;
 BOOL ShouldAdjustLinearly = NO;
 
 BOOL callBackRegistered = NO;
-
-float const CUBAnimationSteps = 30;
-float const AnimationSleepDuration = 0.025f;
 
 int Threshold = 0;
 int PreviousLuxLevel = -1;
@@ -57,10 +56,13 @@ void handle_event(void* target, void* refcon, IOHIDEventQueueRef queue, IOHIDEve
         
         int luxValue=IOHIDEventGetIntegerValue(event, (IOHIDEventField)kIOHIDEventFieldAmbientLightSensorLevel); // lux Event Field
         
-        int luxDelta = (luxValue - PreviousLuxLevel);
-        if (Threshold > 0) {
-            if ((luxDelta * luxDelta) < (Threshold * Threshold)) {
-                return;
+        if (PreviousLuxLevel > 0) {
+            int luxDelta = MAX(luxValue, PreviousLuxLevel) - MIN(luxValue, PreviousLuxLevel);
+            if (Threshold > 0) {
+                int percentChangeInLux = ((float)luxDelta / (float)PreviousLuxLevel) * 100.0f;
+                if (percentChangeInLux < Threshold) {
+                    return;
+                }
             }
         }
         
@@ -170,7 +172,7 @@ void setBacklightLevel(float targetBacklightLevel, float currentBacklightLevel, 
         for (int currentStep = 0; currentStep != CUBAnimationSteps; ++currentStep) {
             brightness = brightness + brightnessDelta;
             SBSetCurrentBacklightLevel(port, brightness);
-            [NSThread sleepForTimeInterval:AnimationSleepDuration];
+            [NSThread sleepForTimeInterval:CUBAnimationSleepDuration];
         }
     }
 

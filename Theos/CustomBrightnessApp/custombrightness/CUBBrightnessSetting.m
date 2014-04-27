@@ -2,7 +2,7 @@
 //  LuxRange.m
 //  TestBrightness
 //
-//  Created by Harshad Dange on 04/01/2014.
+//  Created by Harshad on 04/01/2014.
 //  Copyright (c) 2014 Laughing Buddha Software. All rights reserved.
 //
 
